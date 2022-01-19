@@ -2,7 +2,6 @@ package com.emekamomodu.dronewebservice.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author CMOMODU
