@@ -4,7 +4,8 @@ import com.emekamomodu.dronewebservice.model.enums.EDroneModel;
 import com.emekamomodu.dronewebservice.model.enums.EDroneState;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * @author CMOMODU
@@ -40,10 +41,14 @@ public class Drone {
     @Column(name = "available_weight", nullable = false)
     private Integer availableWeight;
 
-    @ManyToMany
-    @JoinTable(name = "drones_medications", joinColumns = @JoinColumn(name = "drone_id", referencedColumnName = "drone_id"),
-            inverseJoinColumns = @JoinColumn(name = "medication_id", referencedColumnName = "medication_id"))
-    private List<Medication> dronesMedications;
+    @Column(name = "create_date", nullable = false)
+    private LocalDateTime createDate;
+
+    @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DroneMedication> droneMedications;
+
+    @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DroneBatteryLog> droneBatteryLogs;
 
     public Long getDroneId() {
         return droneId;
@@ -99,6 +104,30 @@ public class Drone {
 
     public void setAvailableWeight(Integer availableWeight) {
         this.availableWeight = availableWeight;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
+
+    public Set<DroneMedication> getDroneMedications() {
+        return droneMedications;
+    }
+
+    public void setDroneMedications(Set<DroneMedication> droneMedications) {
+        this.droneMedications = droneMedications;
+    }
+
+    public Set<DroneBatteryLog> getDroneBatteryLogs() {
+        return droneBatteryLogs;
+    }
+
+    public void setDroneBatteryLogs(Set<DroneBatteryLog> droneBatteryLogs) {
+        this.droneBatteryLogs = droneBatteryLogs;
     }
 
 }
