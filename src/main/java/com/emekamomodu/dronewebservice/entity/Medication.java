@@ -1,7 +1,9 @@
 package com.emekamomodu.dronewebservice.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author CMOMODU
@@ -30,8 +32,11 @@ public class Medication {
     @Column(name = "image", unique = true, nullable = false)
     private byte[] image;
 
-    @ManyToMany(mappedBy = "dronesMedications")
-    private List<Drone> drones;
+    @Column(name = "create_date", nullable = false)
+    private LocalDateTime createDate;
+
+    @OneToMany(mappedBy = "medication", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DroneMedication> droneMedications;
 
     public Long getMedicationId() {
         return medicationId;
@@ -73,11 +78,20 @@ public class Medication {
         this.image = image;
     }
 
-    public List<Drone> getDrones() {
-        return drones;
+    public LocalDateTime getCreateDate() {
+        return createDate;
     }
 
-    public void setDrones(List<Drone> drones) {
-        this.drones = drones;
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
     }
+
+    public Set<DroneMedication> getDroneMedications() {
+        return droneMedications;
+    }
+
+    public void setDroneMedications(Set<DroneMedication> droneMedications) {
+        this.droneMedications = droneMedications;
+    }
+
 }
