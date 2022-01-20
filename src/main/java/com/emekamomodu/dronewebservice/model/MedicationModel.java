@@ -1,6 +1,5 @@
 package com.emekamomodu.dronewebservice.model;
 
-import java.util.Arrays;
 
 /**
  * @author CMOMODU
@@ -16,8 +15,6 @@ public class MedicationModel {
     private Integer weight;
 
     private String code;
-
-    private byte[] image;
 
     public Long getId() {
         return id;
@@ -51,14 +48,6 @@ public class MedicationModel {
         this.code = code;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
     @Override
     public String toString() {
         return "MedicationModel{" +
@@ -66,7 +55,6 @@ public class MedicationModel {
                 ", name='" + name + '\'' +
                 ", weight=" + weight +
                 ", code='" + code + '\'' +
-                ", image=" + Arrays.toString(image) +
                 '}';
     }
 
