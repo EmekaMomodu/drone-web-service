@@ -1,6 +1,8 @@
 package com.emekamomodu.dronewebservice.model;
 
 
+import com.emekamomodu.dronewebservice.entity.Medication;
+
 /**
  * @author CMOMODU
  * @version 1.0
@@ -15,6 +17,16 @@ public class MedicationModel {
     private Integer weight;
 
     private String code;
+
+    public MedicationModel() {
+    }
+
+    public MedicationModel(Medication medication) {
+        this.id = medication.getMedicationId();
+        this.name = medication.getName();
+        this.weight = medication.getWeight();
+        this.code = medication.getCode();
+    }
 
     public Long getId() {
         return id;
