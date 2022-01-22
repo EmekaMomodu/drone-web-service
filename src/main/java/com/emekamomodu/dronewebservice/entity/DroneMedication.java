@@ -29,7 +29,7 @@ public class DroneMedication {
     private Integer medicationFrequency;
 
     @Column(name = "load_date", nullable = false)
-    private LocalDateTime loadDate;
+    private LocalDateTime loadDate = LocalDateTime.now();
 
     public Long getDroneMedicationId() {
         return droneMedicationId;
