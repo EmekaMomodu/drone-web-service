@@ -1,8 +1,9 @@
 package com.emekamomodu.dronewebservice.entity;
 
+import com.emekamomodu.dronewebservice.model.MedicationModel;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,7 +20,7 @@ public class Medication {
     @Column(name = "medication_id")
     private Long medicationId;
 
-    @Column(name = "name", unique = true,  nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @Column(name = "weight", nullable = false)
@@ -29,14 +30,28 @@ public class Medication {
     private String code;
 
     @Lob
-    @Column(name = "image", unique = true, nullable = false)
+    @Column(name = "image")
     private byte[] image;
 
+    @Column(name = "image_content_type")
+    private String imageContentType;
+
     @Column(name = "create_date", nullable = false)
-    private LocalDateTime createDate;
+    private LocalDateTime createDate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "medication", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DroneMedication> droneMedications;
+
+    public Medication() {
+    }
+
+    public Medication(MedicationModel medicationModel, byte[] image, String imageContentType) {
+        this.name = medicationModel.getName();
+        this.weight = medicationModel.getWeight();
+        this.code = medicationModel.getCode();
+        this.image = image;
+        this.imageContentType = imageContentType;
+    }
 
     public Long getMedicationId() {
         return medicationId;
@@ -76,6 +91,14 @@ public class Medication {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
     }
 
     public LocalDateTime getCreateDate() {
