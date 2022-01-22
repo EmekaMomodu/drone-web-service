@@ -17,11 +17,11 @@ public class DroneBatteryLog {
     @Column(name = "drone_battery_log_id")
     private Long droneBatteryLogId;
 
-    @Column(name = "battery_capacity", scale = 2, nullable = false)
-    private Float batteryCapacity;
+    @Column(name = "battery_capacity", nullable = false)
+    private Integer batteryCapacity;
 
     @Column(name = "log_date", nullable = false)
-    private LocalDateTime logDate;
+    private LocalDateTime logDate = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "drone_id", nullable = false)
@@ -35,11 +35,11 @@ public class DroneBatteryLog {
         this.droneBatteryLogId = droneBatteryLogId;
     }
 
-    public Float getBatteryCapacity() {
+    public Integer getBatteryCapacity() {
         return batteryCapacity;
     }
 
-    public void setBatteryCapacity(Float batteryCapacity) {
+    public void setBatteryCapacity(Integer batteryCapacity) {
         this.batteryCapacity = batteryCapacity;
     }
 
