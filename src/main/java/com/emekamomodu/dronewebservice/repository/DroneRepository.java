@@ -9,4 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 1/19/22 10:40 PM
  */
 public interface DroneRepository extends JpaRepository<Drone, Long> {
+
+    Boolean existsBySerialNumberIgnoreCase(String serialNumber);
+
 }

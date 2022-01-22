@@ -2,6 +2,7 @@ package com.emekamomodu.dronewebservice.service.implementation;
 
 import com.emekamomodu.dronewebservice.entity.Medication;
 import com.emekamomodu.dronewebservice.exception.custom.InvalidRequestObjectException;
+import com.emekamomodu.dronewebservice.exception.custom.ObjectAlreadyExistsException;
 import com.emekamomodu.dronewebservice.model.MedicationModel;
 import com.emekamomodu.dronewebservice.model.Response;
 import com.emekamomodu.dronewebservice.repository.MedicationRepository;
@@ -36,13 +37,23 @@ public class MedicationServiceImpl implements MedicationService {
     private MedicationRepository medicationRepository;
 
     @Override
-    public Response registerMedication(MedicationModel medicationModel, MultipartFile medicationImage) throws InvalidRequestObjectException, IOException {
+    public Response registerMedication(MedicationModel medicationModel, MultipartFile medicationImage) throws InvalidRequestObjectException, IOException, ObjectAlreadyExistsException {
 
         logger.info("registerMedication initiated");
         logger.info("request::: " + medicationModel + " | " + medicationImage);
 
         // validate arguments
         validateRegisterMedicationRequest(medicationModel, medicationImage);
+
+        // Check that name does not already exist
+        if (medicationRepository.existsByNameIgnoreCase(medicationModel.getName())) {
+            throw new ObjectAlreadyExistsException("Medication with name '" + medicationModel.getName() + "' already exists");
+        }
+
+        // Check that code does not already exist
+        if (medicationRepository.existsByCodeIgnoreCase(medicationModel.getCode())) {
+            throw new ObjectAlreadyExistsException("Medication with code '" + medicationModel.getCode() + "' already exists");
+        }
 
         byte[] image = medicationImage == null ? null : medicationImage.getBytes();
         String imageContentType = medicationImage == null ? null : medicationImage.getContentType();

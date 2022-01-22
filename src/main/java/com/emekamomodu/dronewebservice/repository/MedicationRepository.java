@@ -9,4 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 1/19/22 10:46 PM
  */
 public interface MedicationRepository extends JpaRepository<Medication, Long> {
+
+    Boolean existsByNameIgnoreCase(String name);
+
+    Boolean existsByCodeIgnoreCase(String code);
+
 }

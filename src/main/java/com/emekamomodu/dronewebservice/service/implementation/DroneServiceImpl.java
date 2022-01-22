@@ -2,6 +2,7 @@ package com.emekamomodu.dronewebservice.service.implementation;
 
 import com.emekamomodu.dronewebservice.entity.Drone;
 import com.emekamomodu.dronewebservice.exception.custom.InvalidRequestObjectException;
+import com.emekamomodu.dronewebservice.exception.custom.ObjectAlreadyExistsException;
 import com.emekamomodu.dronewebservice.model.DroneModel;
 import com.emekamomodu.dronewebservice.model.Response;
 import com.emekamomodu.dronewebservice.model.enums.EDroneModel;
@@ -26,13 +27,18 @@ public class DroneServiceImpl implements DroneService {
     private DroneRepository droneRepository;
 
     @Override
-    public Response registerDrone(DroneModel droneModel) throws InvalidRequestObjectException {
+    public Response registerDrone(DroneModel droneModel) throws InvalidRequestObjectException, ObjectAlreadyExistsException {
 
         logger.info("registerDrone initiated");
         logger.info("request::: " + droneModel);
 
         // validate arguments
         validateRegisterDroneRequest(droneModel);
+
+        // Check that Serial number does not already exist
+        if (droneRepository.existsBySerialNumberIgnoreCase(droneModel.getSerialNumber())) {
+            throw new ObjectAlreadyExistsException("Drone with serialNumber '" + droneModel.getSerialNumber() + "' already exists");
+        }
 
         // set battery capacity to 100 if not specified in request
         droneModel.setBatteryCapacity(droneModel.getBatteryCapacity() == null ? 100 : droneModel.getBatteryCapacity());
@@ -49,7 +55,7 @@ public class DroneServiceImpl implements DroneService {
         return response;
     }
 
-    private void validateRegisterDroneRequest(DroneModel droneModel) throws InvalidRequestObjectException {
+    private void validateRegisterDroneRequest(DroneModel droneModel) throws InvalidRequestObjectException{
 
         // Check compulsory request parameters and sub-fields are valid
         if (droneModel == null

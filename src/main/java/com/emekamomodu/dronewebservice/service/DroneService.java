@@ -1,6 +1,7 @@
 package com.emekamomodu.dronewebservice.service;
 
 import com.emekamomodu.dronewebservice.exception.custom.InvalidRequestObjectException;
+import com.emekamomodu.dronewebservice.exception.custom.ObjectAlreadyExistsException;
 import com.emekamomodu.dronewebservice.model.DroneModel;
 import com.emekamomodu.dronewebservice.model.Response;
 
@@ -17,7 +18,7 @@ public interface DroneService {
      * @param droneModel DroneModel object.
      * @return Response object with required data
      */
-    Response registerDrone(DroneModel droneModel) throws InvalidRequestObjectException;
+    Response registerDrone(DroneModel droneModel) throws InvalidRequestObjectException, ObjectAlreadyExistsException;
 
 
 }
