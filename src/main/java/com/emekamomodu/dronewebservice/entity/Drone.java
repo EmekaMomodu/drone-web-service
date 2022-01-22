@@ -1,5 +1,6 @@
 package com.emekamomodu.dronewebservice.entity;
 
+import com.emekamomodu.dronewebservice.model.DroneModel;
 import com.emekamomodu.dronewebservice.model.enums.EDroneModel;
 import com.emekamomodu.dronewebservice.model.enums.EDroneState;
 
@@ -21,7 +22,7 @@ public class Drone {
     @Column(name = "drone_id")
     private Long droneId;
 
-    @Column(name = "serial_number", unique = true,  length = 100, nullable = false)
+    @Column(name = "serial_number", unique = true, length = 100, nullable = false)
     private String serialNumber;
 
     @Enumerated(EnumType.STRING)
@@ -31,24 +32,35 @@ public class Drone {
     @Column(name = "weight_limit", nullable = false)
     private Integer weightLimit;
 
-    @Column(name = "battery_capacity", scale = 2, nullable = false)
-    private Float batteryCapacity;
+    @Column(name = "battery_capacity", nullable = false)
+    private Integer batteryCapacity = 100;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
-    private EDroneState state;
+    private EDroneState state = EDroneState.IDLE;
 
     @Column(name = "available_weight", nullable = false)
     private Integer availableWeight;
 
     @Column(name = "create_date", nullable = false)
-    private LocalDateTime createDate;
+    private LocalDateTime createDate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DroneMedication> droneMedications;
 
     @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DroneBatteryLog> droneBatteryLogs;
+
+    public Drone() {
+    }
+
+    public Drone(DroneModel droneModel) {
+        this.serialNumber = droneModel.getSerialNumber();
+        this.model = droneModel.getModel();
+        this.weightLimit = droneModel.getWeightLimit();
+        this.batteryCapacity = droneModel.getBatteryCapacity();
+        this.availableWeight = droneModel.getWeightLimit();
+    }
 
     public Long getDroneId() {
         return droneId;
@@ -82,11 +94,11 @@ public class Drone {
         this.weightLimit = weightLimit;
     }
 
-    public Float getBatteryCapacity() {
+    public Integer getBatteryCapacity() {
         return batteryCapacity;
     }
 
-    public void setBatteryCapacity(Float batteryCapacity) {
+    public void setBatteryCapacity(Integer batteryCapacity) {
         this.batteryCapacity = batteryCapacity;
     }
 
