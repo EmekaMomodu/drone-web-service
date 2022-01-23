@@ -3,6 +3,7 @@ package com.emekamomodu.dronewebservice.service.implementation;
 import com.emekamomodu.dronewebservice.entity.Medication;
 import com.emekamomodu.dronewebservice.exception.custom.InvalidRequestObjectException;
 import com.emekamomodu.dronewebservice.exception.custom.ObjectAlreadyExistsException;
+import com.emekamomodu.dronewebservice.exception.custom.ObjectNotFoundException;
 import com.emekamomodu.dronewebservice.model.MedicationModel;
 import com.emekamomodu.dronewebservice.model.Response;
 import com.emekamomodu.dronewebservice.repository.MedicationRepository;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * @author CMOMODU
@@ -65,6 +66,28 @@ public class MedicationServiceImpl implements MedicationService {
         logger.info("response::: " + response);
 
         return response;
+
+    }
+
+    @Override
+    public Response getAllMedication() throws ObjectNotFoundException {
+
+        logger.info("Getting all medication");
+
+        List<MedicationModel> medicationModels = new ArrayList<>();
+
+        for (Medication medication : medicationRepository.findAll()) {
+            MedicationModel medicationModel = new MedicationModel(medication);
+            medicationModels.add(medicationModel);
+        }
+
+        if (medicationModels.size() > 0) {
+            logger.info("Medications fetched successfully : {}", medicationModels);
+            return new Response(true, "All Medications fetched Successfully", medicationModels);
+        }
+
+        logger.info("No medication was found : {}", medicationModels);
+        throw new ObjectNotFoundException("No medication was found, Register some first");
 
     }
 
