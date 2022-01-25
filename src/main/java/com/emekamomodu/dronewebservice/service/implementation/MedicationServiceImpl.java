@@ -103,18 +103,18 @@ public class MedicationServiceImpl implements MedicationService {
     @Override
     public Response getLoadedMedicationOnDrone(Long droneId) throws ObjectNotFoundException {
 
+        logger.info("Getting all loaded medications for drone with ID = {}", droneId);
+
         List<DroneMedication> droneMedicationList = droneMedicationRepository.findAllByDrone(new Drone(droneId));
 
         if(droneMedicationList.size() == 0){
             throw new ObjectNotFoundException("No medication loaded on drone with ID = '" + droneId + "'");
         }
 
-//        List<MedicationModel> medications = new ArrayList<>();
         List<MedicationLoadedModel>  medications =  new ArrayList<>();
 
         for(DroneMedication droneMedication: droneMedicationList){
             Medication medication = medicationRepository.getById(droneMedication.getMedication().getMedicationId());
-//            MedicationModel medicationModel = new MedicationModel(medication);
             MedicationLoadedModel medicationLoadedModel = new MedicationLoadedModel(medication, droneMedication.getMedicationFrequency());
             medications.add(medicationLoadedModel);
         }
