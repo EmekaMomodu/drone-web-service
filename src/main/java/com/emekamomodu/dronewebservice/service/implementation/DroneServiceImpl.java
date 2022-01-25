@@ -162,7 +162,7 @@ public class DroneServiceImpl implements DroneService {
         dronesAvailableWeight -= totalWeightOfMedicationsToLoad;
         droneRepository.updateDronesAvailableWeightAndState(droneId, dronesAvailableWeight, EDroneState.LOADED);
 
-        logger.info("Drones loaded successfully");
+        logger.info("Drone loaded successfully");
         return new Response(true, "Drone loaded Successfully");
 
     }
