@@ -3,7 +3,10 @@ package com.emekamomodu.dronewebservice.service;
 import com.emekamomodu.dronewebservice.exception.custom.InvalidRequestObjectException;
 import com.emekamomodu.dronewebservice.exception.custom.ObjectAlreadyExistsException;
 import com.emekamomodu.dronewebservice.model.DroneModel;
+import com.emekamomodu.dronewebservice.model.LoadDroneModel;
 import com.emekamomodu.dronewebservice.model.Response;
+
+import java.util.List;
 
 /**
  * @author CMOMODU
@@ -13,12 +16,27 @@ import com.emekamomodu.dronewebservice.model.Response;
 public interface DroneService {
 
     /**
-     * Register new medication
+     * Register new drone
      *
      * @param droneModel DroneModel object.
      * @return Response object with required data
      */
     Response registerDrone(DroneModel droneModel) throws InvalidRequestObjectException, ObjectAlreadyExistsException;
+
+    /**
+     * Get all registered drones
+     *
+     * @return Response object with required data
+     */
+    Response getAllDrones();
+
+    /**
+     * load drone with medication
+     *
+     * @param loadDroneModel contains drone and medication info to be loaded.
+     * @return Response object with required data
+     */
+    Response loadDrone(LoadDroneModel loadDroneModel);
 
 
 }

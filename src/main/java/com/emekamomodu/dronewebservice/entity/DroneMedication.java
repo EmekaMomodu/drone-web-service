@@ -31,6 +31,15 @@ public class DroneMedication {
     @Column(name = "load_date", nullable = false)
     private LocalDateTime loadDate = LocalDateTime.now();
 
+    public DroneMedication() {
+    }
+
+    public DroneMedication(Drone drone, Medication medication, Integer frequency) {
+        this.drone = drone;
+        this.medication = medication;
+        this.medicationFrequency = frequency;
+    }
+
     public Long getDroneMedicationId() {
         return droneMedicationId;
     }

@@ -54,6 +54,10 @@ public class Drone {
     public Drone() {
     }
 
+    public Drone(Long droneId) {
+        this.droneId = droneId;
+    }
+
     public Drone(DroneModel droneModel) {
         this.serialNumber = droneModel.getSerialNumber();
         this.model = droneModel.getModel();

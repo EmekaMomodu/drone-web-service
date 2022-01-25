@@ -45,6 +45,10 @@ public class Medication {
     public Medication() {
     }
 
+    public Medication(Long medicationId) {
+        this.medicationId = medicationId;
+    }
+
     public Medication(MedicationModel medicationModel, byte[] image, String imageContentType) {
         this.name = medicationModel.getName();
         this.weight = medicationModel.getWeight();
