@@ -34,4 +34,9 @@ public class MedicationController {
         return ResponseEntity.ok(medicationService.getAllMedication());
     }
 
+    @GetMapping("/get-loaded-medication-on-drone")
+    public ResponseEntity<Response> getLoadedMedicationOnDrone(@RequestParam(value = "droneId") Long droneId) {
+        return ResponseEntity.ok(medicationService.getLoadedMedicationOnDrone(droneId));
+    }
+
 }

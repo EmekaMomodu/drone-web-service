@@ -1,11 +1,15 @@
 package com.emekamomodu.dronewebservice.service.implementation;
 
+import com.emekamomodu.dronewebservice.entity.Drone;
+import com.emekamomodu.dronewebservice.entity.DroneMedication;
 import com.emekamomodu.dronewebservice.entity.Medication;
 import com.emekamomodu.dronewebservice.exception.custom.InvalidRequestObjectException;
 import com.emekamomodu.dronewebservice.exception.custom.ObjectAlreadyExistsException;
 import com.emekamomodu.dronewebservice.exception.custom.ObjectNotFoundException;
+import com.emekamomodu.dronewebservice.model.MedicationLoadedModel;
 import com.emekamomodu.dronewebservice.model.MedicationModel;
 import com.emekamomodu.dronewebservice.model.Response;
+import com.emekamomodu.dronewebservice.repository.DroneMedicationRepository;
 import com.emekamomodu.dronewebservice.repository.MedicationRepository;
 import com.emekamomodu.dronewebservice.service.MedicationService;
 import org.slf4j.Logger;
@@ -13,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,6 +29,7 @@ import java.util.*;
  * @date 1/19/22 11:21 PM
  */
 @Service
+@Transactional
 public class MedicationServiceImpl implements MedicationService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -36,6 +42,9 @@ public class MedicationServiceImpl implements MedicationService {
 
     @Autowired
     private MedicationRepository medicationRepository;
+
+    @Autowired
+    private DroneMedicationRepository droneMedicationRepository;
 
     @Override
     public Response registerMedication(MedicationModel medicationModel, MultipartFile medicationImage) throws InvalidRequestObjectException, IOException, ObjectAlreadyExistsException {
@@ -89,6 +98,32 @@ public class MedicationServiceImpl implements MedicationService {
         logger.info("No medication was found : {}", medicationModels);
         throw new ObjectNotFoundException("No medication was found, Register some first");
 
+    }
+
+    @Override
+    public Response getLoadedMedicationOnDrone(Long droneId) throws ObjectNotFoundException {
+
+        List<DroneMedication> droneMedicationList = droneMedicationRepository.findAllByDrone(new Drone(droneId));
+
+        if(droneMedicationList.size() == 0){
+            throw new ObjectNotFoundException("No medication loaded on drone with ID = '" + droneId + "'");
+        }
+
+//        List<MedicationModel> medications = new ArrayList<>();
+        List<MedicationLoadedModel>  medications =  new ArrayList<>();
+
+        for(DroneMedication droneMedication: droneMedicationList){
+            Medication medication = medicationRepository.getById(droneMedication.getMedication().getMedicationId());
+//            MedicationModel medicationModel = new MedicationModel(medication);
+            MedicationLoadedModel medicationLoadedModel = new MedicationLoadedModel(medication, droneMedication.getMedicationFrequency());
+            medications.add(medicationLoadedModel);
+        }
+
+        Response response = new Response(true, "Loaded Medications on Drone with ID = '" + droneId + "' fetched Successfully", medications);
+
+        logger.info("response::: " + response);
+
+        return response;
     }
 
     private void validateRegisterMedicationRequest(MedicationModel medicationModel, MultipartFile medicationImage) throws InvalidRequestObjectException {

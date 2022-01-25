@@ -32,5 +32,12 @@ public interface MedicationService {
      */
     Response getAllMedication() throws ObjectNotFoundException;
 
+    /**
+     * Get all loaded medication on a drone
+     *
+     * @return Response object with required data
+     */
+    Response getLoadedMedicationOnDrone(Long droneId) throws ObjectNotFoundException;
+
 
 }

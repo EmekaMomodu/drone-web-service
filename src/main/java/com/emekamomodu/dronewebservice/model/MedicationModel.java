@@ -69,5 +69,4 @@ public class MedicationModel {
                 ", code='" + code + '\'' +
                 '}';
     }
-
 }
