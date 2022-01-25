@@ -32,8 +32,8 @@ public class Drone {
     @Column(name = "weight_limit", nullable = false)
     private Integer weightLimit;
 
-    @Column(name = "battery_capacity", nullable = false)
-    private Integer batteryCapacity = 100;
+    @Column(name = "battery_level", nullable = false)
+    private Integer batteryLevel = 100;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
@@ -62,7 +62,7 @@ public class Drone {
         this.serialNumber = droneModel.getSerialNumber();
         this.model = droneModel.getModel();
         this.weightLimit = droneModel.getWeightLimit();
-        this.batteryCapacity = droneModel.getBatteryCapacity();
+        this.batteryLevel = droneModel.getBatteryLevel();
         this.availableWeight = droneModel.getWeightLimit();
     }
 
@@ -98,12 +98,12 @@ public class Drone {
         this.weightLimit = weightLimit;
     }
 
-    public Integer getBatteryCapacity() {
-        return batteryCapacity;
+    public Integer getBatteryLevel() {
+        return batteryLevel;
     }
 
-    public void setBatteryCapacity(Integer batteryCapacity) {
-        this.batteryCapacity = batteryCapacity;
+    public void setBatteryLevel(Integer batteryCapacity) {
+        this.batteryLevel = batteryCapacity;
     }
 
     public EDroneState getState() {

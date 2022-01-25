@@ -17,8 +17,8 @@ public class DroneBatteryLog {
     @Column(name = "drone_battery_log_id")
     private Long droneBatteryLogId;
 
-    @Column(name = "battery_capacity", nullable = false)
-    private Integer batteryCapacity;
+    @Column(name = "battery_level", nullable = false)
+    private Integer batteryLevel;
 
     @Column(name = "log_date", nullable = false)
     private LocalDateTime logDate = LocalDateTime.now();
@@ -35,12 +35,12 @@ public class DroneBatteryLog {
         this.droneBatteryLogId = droneBatteryLogId;
     }
 
-    public Integer getBatteryCapacity() {
-        return batteryCapacity;
+    public Integer getBatteryLevel() {
+        return batteryLevel;
     }
 
-    public void setBatteryCapacity(Integer batteryCapacity) {
-        this.batteryCapacity = batteryCapacity;
+    public void setBatteryLevel(Integer batteryCapacity) {
+        this.batteryLevel = batteryCapacity;
     }
 
     public LocalDateTime getLogDate() {

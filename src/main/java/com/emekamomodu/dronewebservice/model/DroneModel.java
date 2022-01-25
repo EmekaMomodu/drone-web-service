@@ -19,7 +19,7 @@ public class DroneModel {
 
     private Integer weightLimit;
 
-    private Integer batteryCapacity;
+    private Integer batteryLevel;
 
     private EDroneState state;
 
@@ -33,7 +33,7 @@ public class DroneModel {
         this.serialNumber = drone.getSerialNumber();
         this.model = drone.getModel();
         this.weightLimit = drone.getWeightLimit();
-        this.batteryCapacity = drone.getBatteryCapacity();
+        this.batteryLevel = drone.getBatteryLevel();
         this.state = drone.getState();
         this.availableWeight = drone.getAvailableWeight();
     }
@@ -70,12 +70,12 @@ public class DroneModel {
         this.weightLimit = weightLimit;
     }
 
-    public Integer getBatteryCapacity() {
-        return batteryCapacity;
+    public Integer getBatteryLevel() {
+        return batteryLevel;
     }
 
-    public void setBatteryCapacity(Integer batteryCapacity) {
-        this.batteryCapacity = batteryCapacity;
+    public void setBatteryLevel(Integer batteryLevel) {
+        this.batteryLevel = batteryLevel;
     }
 
     public EDroneState getState() {
@@ -101,7 +101,7 @@ public class DroneModel {
                 ", serialNumber='" + serialNumber + '\'' +
                 ", model=" + model +
                 ", weightLimit=" + weightLimit +
-                ", batteryCapacity=" + batteryCapacity +
+                ", batteryCapacity=" + batteryLevel +
                 ", state=" + state +
                 ", availableWeight=" + availableWeight +
                 '}';
