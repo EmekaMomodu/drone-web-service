@@ -36,4 +36,15 @@ public class DroneController {
         return ResponseEntity.ok(droneService.loadDrone(loadDroneModel));
     }
 
+    @GetMapping("/get-available-drones-for-loading")
+    public ResponseEntity<Response> getAvailableDronesForLoading() {
+        return ResponseEntity.ok(droneService.getAvailableDronesForLoading());
+    }
+
+    @GetMapping("/get-battery-level")
+    public ResponseEntity<Response> getDronesBatteryLevel(@RequestParam(value = "droneId") Long droneId) {
+        return ResponseEntity.ok(droneService.getDronesBatteryLevel(droneId));
+    }
+
+
 }

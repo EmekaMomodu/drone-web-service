@@ -38,5 +38,19 @@ public interface DroneService {
      */
     Response loadDrone(LoadDroneModel loadDroneModel);
 
+    /**
+     * Get all available drones for loading
+     *
+     * @return Response object with required data
+     */
+    Response getAvailableDronesForLoading();
+
+    /**
+     * Get drones battery level
+     *
+     * @return Response object with required data
+     */
+    Response getDronesBatteryLevel(Long droneId);
+
 
 }

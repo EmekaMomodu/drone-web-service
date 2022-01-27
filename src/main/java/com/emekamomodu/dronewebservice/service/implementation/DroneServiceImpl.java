@@ -27,6 +27,7 @@ import java.util.Optional;
  * @version 1.0
  * @date 1/19/22 10:53 PM
  */
+@SuppressWarnings("Duplicates")
 @Service
 public class DroneServiceImpl implements DroneService {
 
@@ -56,7 +57,7 @@ public class DroneServiceImpl implements DroneService {
         }
 
         // set battery capacity to 100 if not specified in request
-        droneModel.setBatteryCapacity(droneModel.getBatteryCapacity() == null ? 100 : droneModel.getBatteryCapacity());
+        droneModel.setBatteryLevel(droneModel.getBatteryLevel() == null ? 100 : droneModel.getBatteryLevel());
 
         // set drone's model based on specified weight limit
         droneModel.setModel(getModelByWeightLimit(droneModel.getWeightLimit()));
@@ -167,6 +168,53 @@ public class DroneServiceImpl implements DroneService {
 
     }
 
+    @Override
+    public Response getAvailableDronesForLoading() {
+
+        // a drone is available for loading if:
+        // 1. drones state is IDLE or Loaded
+        // 2. available weight is greater than zero
+
+        logger.info("Getting all Drones available for loading");
+
+        List<DroneModel> droneModels = new ArrayList<>();
+
+        for (Drone drone : droneRepository.findAll()) {
+            EDroneState droneState = drone.getState();
+            Integer droneAvailableWeight = drone.getAvailableWeight();
+            if((droneState == EDroneState.IDLE || droneState == EDroneState.LOADED) && (droneAvailableWeight > 0)){
+                DroneModel droneModel = new DroneModel(drone);
+                droneModels.add(droneModel);
+            }
+        }
+
+        if (droneModels.size() > 0) {
+            logger.info("All Drones available for loading fetched Successfully : {}", droneModels);
+            return new Response(true, "All Drones available for loading fetched Successfully", droneModels);
+        }
+
+        logger.info("No Drone available for loading was found : {}", droneModels);
+        throw new ObjectNotFoundException("No Drone available for loading was found");
+
+    }
+
+    @Override
+    public Response getDronesBatteryLevel(Long droneId) {
+
+        logger.info("Getting battery level for drone with ID = '{}'", droneId);
+
+        // get drone by id, throw not found exception if not found
+        Integer droneBatteryLevel = droneRepository.findById(droneId)
+                .orElseThrow(() -> new ObjectNotFoundException("Drone with specified ID '" + droneId + "' not found")).getBatteryLevel();
+
+        Response response = new Response(true, "Drone's Battery Level fetched Successfully", droneBatteryLevel);
+
+        logger.info("response::: " + response);
+
+        return response;
+
+    }
+
     private void validateRegisterDroneRequest(DroneModel droneModel) throws InvalidRequestObjectException{
 
         // Check compulsory request parameters and sub-fields are valid
@@ -181,7 +229,7 @@ public class DroneServiceImpl implements DroneService {
             throw new InvalidRequestObjectException("Invalid serialNumber and/or weightLimit");
         }
 
-        Integer batterCapacity = droneModel.getBatteryCapacity();
+        Integer batterCapacity = droneModel.getBatteryLevel();
 
         if (batterCapacity != null && (batterCapacity < 0 || batterCapacity > 100)) {
             throw new InvalidRequestObjectException("batterCapacity should be between 0-100");
