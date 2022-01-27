@@ -28,8 +28,11 @@ public class DroneMedication {
     @Column(name = "medication_frequency", nullable = false)
     private Integer medicationFrequency;
 
-    @Column(name = "load_date", nullable = false)
-    private LocalDateTime loadDate = LocalDateTime.now();
+    @Column(name = "create_date", nullable = false)
+    private LocalDateTime createDate = LocalDateTime.now();
+
+    @Column(name = "modified_date")
+    private LocalDateTime modifiedDate;
 
     public DroneMedication() {
     }
@@ -72,12 +75,20 @@ public class DroneMedication {
         this.medicationFrequency = medicationFrequency;
     }
 
-    public LocalDateTime getLoadDate() {
-        return loadDate;
+    public LocalDateTime getCreateDate() {
+        return createDate;
     }
 
-    public void setLoadDate(LocalDateTime loadDate) {
-        this.loadDate = loadDate;
+    public void setCreateDate(LocalDateTime loadDate) {
+        this.createDate = loadDate;
+    }
+
+    public LocalDateTime getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(LocalDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
 }
