@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -110,6 +111,12 @@ public class DroneServiceImpl implements DroneService {
             throw new InvalidRequestObjectException("Current drone state = '" + droneInitState + "' is not loadable");
         }
 
+        // check drone battery level is not less than 25, else throw exception = current drone battery level is not loadable
+        Integer droneBatteryLevel = drone.getBatteryLevel();
+        if(droneBatteryLevel < 25){
+            throw new InvalidRequestObjectException("Current drone battery level = '" + droneBatteryLevel + "' is not loadable");
+        }
+
         //update drone's state to Loading
         droneRepository.updateDronesState(droneId, EDroneState.LOADING);
 
@@ -146,8 +153,8 @@ public class DroneServiceImpl implements DroneService {
 
         }
 
-        // if drone's available weight <= totalWeightOfMedicationsToLoad throw medications exceed available weight
-        if(dronesAvailableWeight <= totalWeightOfMedicationsToLoad){
+        // if drone's available weight less than totalWeightOfMedicationsToLoad throw medications exceed available weight
+        if(dronesAvailableWeight < totalWeightOfMedicationsToLoad){
             //update drones state back to initial
             droneRepository.updateDronesState(droneId, droneInitState);
             throw new InvalidRequestObjectException("Total specified medications weight = '" + totalWeightOfMedicationsToLoad + "' exceeds dronesAvailableWeight = '" + dronesAvailableWeight + "'");
@@ -155,8 +162,20 @@ public class DroneServiceImpl implements DroneService {
 
         // loop through medication list again and save to DroneMedicationRepo
         for(LoadDroneMedicationModel medicationModel: loadDroneModel.getMedicationList()){
+
+            Optional<DroneMedication> loadedMedicationOnDrone = droneMedicationRepository.findByDroneAndMedication(new Drone(droneId), new Medication(medicationModel.getMedicationId()));
+
+            // if medication already exist for drone, update frequency by adding previous frequency to new frequency
+            if (loadedMedicationOnDrone.isPresent()){
+                Integer updateFrequency = loadedMedicationOnDrone.get().getMedicationFrequency() + medicationModel.getFrequency();
+                droneMedicationRepository.updateFrequencyOfMedicationForDrone(new Drone(droneId), new Medication(medicationModel.getMedicationId()), updateFrequency, LocalDateTime.now());
+                continue;
+            }
+
+            // else load new medication on drone
             DroneMedication droneMedication = new DroneMedication(new Drone(droneId), new Medication(medicationModel.getMedicationId()), medicationModel.getFrequency());
             droneMedicationRepository.save(droneMedication);
+
         }
 
         // update drone's available weight ( available weight - totalWeightOfMedicationsToLoad ) and state
@@ -173,7 +192,8 @@ public class DroneServiceImpl implements DroneService {
 
         // a drone is available for loading if:
         // 1. drones state is IDLE or Loaded
-        // 2. available weight is greater than zero
+        // 2. drones battery level is not less than 25
+        // 3. drones available weight is greater than zero
 
         logger.info("Getting all Drones available for loading");
 
@@ -182,7 +202,8 @@ public class DroneServiceImpl implements DroneService {
         for (Drone drone : droneRepository.findAll()) {
             EDroneState droneState = drone.getState();
             Integer droneAvailableWeight = drone.getAvailableWeight();
-            if((droneState == EDroneState.IDLE || droneState == EDroneState.LOADED) && (droneAvailableWeight > 0)){
+            Integer droneBatteryLevel = drone.getBatteryLevel();
+            if((droneState == EDroneState.IDLE || droneState == EDroneState.LOADED) && (droneBatteryLevel >= 25) && (droneAvailableWeight > 0)){
                 DroneModel droneModel = new DroneModel(drone);
                 droneModels.add(droneModel);
             }
@@ -229,10 +250,10 @@ public class DroneServiceImpl implements DroneService {
             throw new InvalidRequestObjectException("Invalid serialNumber and/or weightLimit");
         }
 
-        Integer batterCapacity = droneModel.getBatteryLevel();
+        Integer batteryLevel = droneModel.getBatteryLevel();
 
-        if (batterCapacity != null && (batterCapacity < 0 || batterCapacity > 100)) {
-            throw new InvalidRequestObjectException("batterCapacity should be between 0-100");
+        if (batteryLevel != null && (batteryLevel < 0 || batteryLevel > 100)) {
+            throw new InvalidRequestObjectException("batteryLevel should be between 0-100");
         }
 
     }
