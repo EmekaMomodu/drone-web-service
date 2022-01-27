@@ -46,5 +46,4 @@ public class DroneController {
         return ResponseEntity.ok(droneService.getDronesBatteryLevel(droneId));
     }
 
-
 }
