@@ -27,6 +27,14 @@ public class DroneBatteryLog {
     @JoinColumn(name = "drone_id", nullable = false)
     private Drone drone;
 
+    public DroneBatteryLog() {
+    }
+
+    public DroneBatteryLog(Integer batteryLevel, Drone drone) {
+        this.batteryLevel = batteryLevel;
+        this.drone = drone;
+    }
+
     public Long getDroneBatteryLogId() {
         return droneBatteryLogId;
     }
