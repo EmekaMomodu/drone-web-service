@@ -236,6 +236,44 @@ public class DroneServiceImpl implements DroneService {
 
     }
 
+    @Override
+    public Response updateDronesBatteryLevel(DroneModel droneModel) {
+
+        validateUpdateDronesBatteryLevelRequest(droneModel);
+
+        logger.info("Updating battery level for drone with ID = '{}'", droneModel.getDroneId());
+
+        // get drone by id, throw not found exception if not found
+        droneRepository.findById(droneModel.getDroneId()).orElseThrow(() -> new ObjectNotFoundException("Drone with specified ID '" + droneModel.getDroneId() + "' not found"));
+
+        // update drone by id
+        droneRepository.updateDronesBatteryLevel(droneModel.getDroneId(), droneModel.getBatteryLevel());
+
+        Response response = new Response(true, "Drone's Battery Level updated Successfully");
+
+        logger.info("response::: " + response);
+
+        return response;
+
+    }
+
+    private void validateUpdateDronesBatteryLevelRequest(DroneModel droneModel) throws InvalidRequestObjectException{
+
+        // Check compulsory request parameters and sub-fields are valid
+        if (droneModel == null
+                || droneModel.getDroneId() == null
+                || droneModel.getBatteryLevel() == null) {
+            throw new InvalidRequestObjectException("ID or Battery Level not specified");
+        }
+
+        Integer batteryLevel = droneModel.getBatteryLevel();
+
+        if (batteryLevel < 0 || batteryLevel > 100) {
+            throw new InvalidRequestObjectException("batteryLevel should be between 0-100");
+        }
+
+    }
+
     private void validateRegisterDroneRequest(DroneModel droneModel) throws InvalidRequestObjectException{
 
         // Check compulsory request parameters and sub-fields are valid

@@ -27,4 +27,9 @@ public interface DroneRepository extends JpaRepository<Drone, Long> {
     @Query("update Drone drone set drone.state = :droneState where drone.droneId = :droneId")
     void updateDronesState(@Param(value = "droneId") Long droneId, @Param(value = "droneState") EDroneState droneState);
 
+    @Transactional
+    @Modifying
+    @Query("update Drone drone set drone.batteryLevel = :batteryLevel where drone.droneId = :droneId")
+    void updateDronesBatteryLevel(@Param(value = "droneId") Long droneId, @Param(value = "batteryLevel") Integer batteryLevel);
+
 }

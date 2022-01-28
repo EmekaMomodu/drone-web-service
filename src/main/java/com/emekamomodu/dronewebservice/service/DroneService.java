@@ -52,5 +52,12 @@ public interface DroneService {
      */
     Response getDronesBatteryLevel(Long droneId);
 
+    /**
+     * update drones battery level
+     *
+     * @param droneModel DroneModel object.
+     * @return Response object with required data
+     */
+    Response updateDronesBatteryLevel(DroneModel droneModel);
 
 }

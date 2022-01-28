@@ -46,4 +46,9 @@ public class DroneController {
         return ResponseEntity.ok(droneService.getDronesBatteryLevel(droneId));
     }
 
+    @PatchMapping("/update-battery-level")
+    public ResponseEntity<Response> updateDronesBatteryLevel(@RequestBody DroneModel droneModel) {
+        return ResponseEntity.ok(droneService.updateDronesBatteryLevel(droneModel));
+    }
+
 }
