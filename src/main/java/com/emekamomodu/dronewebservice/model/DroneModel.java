@@ -28,6 +28,12 @@ public class DroneModel {
     public DroneModel() {
     }
 
+    public DroneModel(String serialNumber, Integer weightLimit, Integer batteryLevel) {
+        this.serialNumber = serialNumber;
+        this.weightLimit = weightLimit;
+        this.batteryLevel = batteryLevel;
+    }
+
     public DroneModel(Drone drone) {
         this.droneId = drone.getDroneId();
         this.serialNumber = drone.getSerialNumber();

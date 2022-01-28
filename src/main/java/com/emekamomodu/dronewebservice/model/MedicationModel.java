@@ -21,6 +21,12 @@ public class MedicationModel {
     public MedicationModel() {
     }
 
+    public MedicationModel(String name, Integer weight, String code) {
+        this.name = name;
+        this.weight = weight;
+        this.code = code;
+    }
+
     public MedicationModel(Medication medication) {
         this.id = medication.getMedicationId();
         this.name = medication.getName();
