@@ -21,7 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author CMOMODU
@@ -107,13 +109,13 @@ public class MedicationServiceImpl implements MedicationService {
 
         List<DroneMedication> droneMedicationList = droneMedicationRepository.findAllByDrone(new Drone(droneId));
 
-        if(droneMedicationList.size() == 0){
+        if (droneMedicationList.size() == 0) {
             throw new ObjectNotFoundException("No medication loaded on drone with ID = '" + droneId + "'");
         }
 
-        List<MedicationLoadedModel>  medications =  new ArrayList<>();
+        List<MedicationLoadedModel> medications = new ArrayList<>();
 
-        for(DroneMedication droneMedication: droneMedicationList){
+        for (DroneMedication droneMedication : droneMedicationList) {
             Medication medication = medicationRepository.getById(droneMedication.getMedication().getMedicationId());
             MedicationLoadedModel medicationLoadedModel = new MedicationLoadedModel(medication, droneMedication.getMedicationFrequency());
             medications.add(medicationLoadedModel);

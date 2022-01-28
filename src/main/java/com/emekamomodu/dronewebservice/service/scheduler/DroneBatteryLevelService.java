@@ -2,7 +2,6 @@ package com.emekamomodu.dronewebservice.service.scheduler;
 
 import com.emekamomodu.dronewebservice.entity.Drone;
 import com.emekamomodu.dronewebservice.entity.DroneBatteryLog;
-import com.emekamomodu.dronewebservice.exception.custom.ObjectNotFoundException;
 import com.emekamomodu.dronewebservice.repository.DroneBatteryLogRepository;
 import com.emekamomodu.dronewebservice.repository.DroneRepository;
 import org.slf4j.Logger;
@@ -42,15 +41,15 @@ public class DroneBatteryLevelService {
         logger.info("Scheduled Service Completed");
     }
 
-    private void getAndLogAllDronesBatteryLevel(){
+    private void getAndLogAllDronesBatteryLevel() {
         logger.info("Getting and logging Battery Level of All Registered Drones");
         // get all drones
         List<Drone> droneList = droneRepository.findAll();
-        if(droneList.size() == 0){
+        if (droneList.size() == 0) {
             logger.error("No Registered Drone Found");
         }
         // log battery level
-        for(Drone drone: droneList){
+        for (Drone drone : droneList) {
             Integer batteryLevel = drone.getBatteryLevel();
             DroneBatteryLog droneBatteryLog = new DroneBatteryLog(batteryLevel, drone);
             droneBatteryLogRepository.save(droneBatteryLog);

@@ -6,8 +6,6 @@ import com.emekamomodu.dronewebservice.model.DroneModel;
 import com.emekamomodu.dronewebservice.model.LoadDroneModel;
 import com.emekamomodu.dronewebservice.model.Response;
 
-import java.util.List;
-
 /**
  * @author CMOMODU
  * @version 1.0

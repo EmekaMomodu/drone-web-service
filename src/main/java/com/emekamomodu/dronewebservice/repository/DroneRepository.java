@@ -20,7 +20,7 @@ public interface DroneRepository extends JpaRepository<Drone, Long> {
     @Transactional
     @Modifying
     @Query("update Drone drone set drone.availableWeight = :availableWeight, drone.state = :droneState where drone.droneId = :droneId")
-    void updateDronesAvailableWeightAndState(@Param(value = "droneId") Long droneId, @Param(value = "availableWeight") Integer availableWeight,  @Param(value = "droneState") EDroneState droneState);
+    void updateDronesAvailableWeightAndState(@Param(value = "droneId") Long droneId, @Param(value = "availableWeight") Integer availableWeight, @Param(value = "droneState") EDroneState droneState);
 
     @Transactional
     @Modifying

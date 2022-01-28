@@ -7,7 +7,7 @@ import com.emekamomodu.dronewebservice.entity.Medication;
  * @version 1.0
  * @date 1/25/22 9:27 PM
  */
-public class MedicationLoadedModel extends MedicationModel{
+public class MedicationLoadedModel extends MedicationModel {
 
     private Integer frequency;
 
