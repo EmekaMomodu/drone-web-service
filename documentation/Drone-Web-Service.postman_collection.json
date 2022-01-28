@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "9b2734fe-9a9d-4fcc-bfa3-d0e79400e3b5",
+		"name": "Drone-Web-Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "registerDrone",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serialNumber\": \"87678933883\",\n    \"weightLimit\": 300,\n    \"batteryLevel\": 100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/drone/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"drone",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllDrones",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/drone/get-all",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"drone",
+						"get-all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registerMedication",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "medication",
+							"value": "{\n    \"name\" : \"Panadol\",\n    \"weight\" : 50,\n    \"code\" : \"PND_01\"\n}",
+							"contentType": "application/json",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/cmomodu/Downloads/panadol-image.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/medication/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"medication",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllMedication",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/medication/get-all",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"medication",
+						"get-all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loadDrone",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/drone/get-all",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"drone",
+						"get-all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLoadedMedicationOnDrone",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/medication/get-loaded-medication-on-drone?droneId=1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"medication",
+						"get-loaded-medication-on-drone"
+					],
+					"query": [
+						{
+							"key": "droneId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAvailableDronesForLoading",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/drone/get-available-drones-for-loading",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"drone",
+						"get-available-drones-for-loading"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDronesBatteryLevel",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/drone/get-battery-level?droneId=1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"drone",
+						"get-battery-level"
+					],
+					"query": [
+						{
+							"key": "droneId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateDronesBatteryLevel",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"droneId\": 1,\n    \"batteryLevel\": 68\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/drone/update-battery-level",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"drone",
+						"update-battery-level"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

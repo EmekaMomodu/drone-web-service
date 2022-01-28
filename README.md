@@ -30,9 +30,12 @@ These instructions will get the service up & running on your local environment.
 4. Services are now available at `http://localhost:8080/...`. View documentation for available endpoints.
 
 ## API Documentation
-View api documentation at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+View api documentation at
+* Postman documentation located at [Drone-Web-Service.postman_collection.json](https://github.com/EmekaMomodu/drone-web-service/blob/main/documentation/Drone-Web-Service.postman_collection.json)
+* Postman documentation published at [https://documenter.getpostman.com/view/9270015/UVeCPTHk ](https://documenter.getpostman.com/view/9270015/UVeCPTHk)
+* Swagger documentation at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) (while the service is running)
 
 
 ## Database Console
-View H2 in-memory database at [http://localhost:8080/h2-console](http://localhost:8080/h2-console) login details specified at [application.properties](https://github.com/EmekaMomodu/drone-web-service/blob/main/src/main/resources/application.properties)
+View H2 in-memory database at [http://localhost:8080/h2-console](http://localhost:8080/h2-console) login details specified at [application.properties](https://github.com/EmekaMomodu/drone-web-service/blob/main/src/main/resources/application.properties) (while the service is running)
 
