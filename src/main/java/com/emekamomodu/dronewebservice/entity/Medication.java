@@ -16,7 +16,7 @@ import java.util.Set;
 public class Medication {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "medication_id")
     private Long medicationId;
 

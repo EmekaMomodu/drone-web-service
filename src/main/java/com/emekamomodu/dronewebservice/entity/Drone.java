@@ -18,7 +18,7 @@ import java.util.Set;
 public class Drone {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "drone_id")
     private Long droneId;
 

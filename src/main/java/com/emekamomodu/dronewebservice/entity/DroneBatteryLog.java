@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class DroneBatteryLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "drone_battery_log_id")
     private Long droneBatteryLogId;
 

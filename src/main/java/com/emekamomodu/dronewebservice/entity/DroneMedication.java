@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class DroneMedication {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "drone_medication_id")
     private Long droneMedicationId;
 
