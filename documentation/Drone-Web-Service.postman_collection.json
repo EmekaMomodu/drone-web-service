@@ -107,14 +107,23 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"droneId\": 1,\n    \"medicationList\": [\n        {\n            \"medicationId\": 1,\n            \"frequency\": 2\n        },\n        {\n            \"medicationId\": 2,\n            \"frequency\": 1\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{baseUrl}}/drone/get-all",
+					"raw": "{{baseUrl}}/drone/load",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"drone",
-						"get-all"
+						"load"
 					]
 				}
 			},
